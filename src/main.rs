@@ -2,7 +2,7 @@
 
 extern crate serde;
 extern crate serde_yaml;
-extern crate serial;
+extern crate wiringpi;
 
 mod utility;
 
@@ -55,7 +55,9 @@ fn main() {
     // Initialize dot position
     let mut dot_position: Option<u32>;
 
-    let mut search_pattern = ColorPattern::RedWhiteRed;
+    // Initialize gpio
+    let pi = wiringpi::setup();
+    let pin = pi.pwm_pin();
 
     loop {
         // Take picture
@@ -212,13 +214,14 @@ fn main() {
         match dot_position {
             Some(pos) => {
                 println!("Dot found at x = {}", pos);
-                println!("The dot is {} inches away", lookup.dist(pos as usize));
-                // println!(
-                //     "The dot is {} inches away",
-                //     0.1 * (1.00356 + 0.00033667 * -(pos as i32 - (width / 2) as i32) as f32).tan()
-                // );
+                let final_pos = lookup.dist(pos as usize);
+		println!("The dot is {} inches away", final_pos);
+                pin.write((final_pos.powf(0.33333) * 149.12) as u16);
             }
-            None => println!("Dot not found!"),
+            None => {
+		println!("Dot not found!");
+		pin.write(0);
+	    }
         }
     }
 }
