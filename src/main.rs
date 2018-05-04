@@ -215,13 +215,13 @@ fn main() {
             Some(pos) => {
                 println!("Dot found at x = {}", pos);
                 let final_pos = lookup.dist(pos as usize);
-		println!("The dot is {} inches away", final_pos);
+                println!("The dot is {} inches away", final_pos);
                 pin.write((final_pos.powf(0.33333) * 149.12) as u16);
             }
             None => {
-		println!("Dot not found!");
-		pin.write(0);
-	    }
+                println!("Dot not found!");
+                pin.write(0);
+            }
         }
     }
 }
