@@ -22,7 +22,6 @@ int main(int argc, char** argv) {
     LookupTable lookup(2592);
     while(file >> in_pos >> in_dist) {
         lookup.addExact(in_pos, in_dist);
-        cout << "read in " << in_pos << " : " << in_dist << endl;
     }
     lookup.fill();
 
@@ -51,9 +50,11 @@ int main(int argc, char** argv) {
     while(true) {
         // Take picture
         system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
+        cout << "took picture" << endl;
 
         // Load the image file
         ifstream image_file("pic.bmp", std::ios::binary);
+        cout << "opended image file" << endl;
 
         // Read image header into buffer
         vector<BYTE> header_buffer(54, 0);
