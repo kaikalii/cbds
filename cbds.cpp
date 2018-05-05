@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
     LookupTable lookup(2592);
     while(file >> in_pos >> in_dist) {
         lookup.addExact(in_pos, in_dist);
+        cout << "read in " << in_pos << " : " << in_dist << endl;
     }
     lookup.fill();
 
