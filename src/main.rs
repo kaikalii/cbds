@@ -34,7 +34,7 @@ fn main() {
     let scan_line_top: u32 = if args.len() >= 2 {
         args[1].parse::<u32>().unwrap()
     } else {
-        1100
+        1028
     };
     let scan_line_height: u32 = if args.len() >= 3 {
         args[2].parse::<u32>().unwrap()
