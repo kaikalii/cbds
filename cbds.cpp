@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 
     while(true) {
         // Take picture
-        // system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
+        system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
 
         // Load the image file
         ifstream image_file("pic.bmp", std::ios::binary);
