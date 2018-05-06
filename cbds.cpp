@@ -28,16 +28,16 @@ int main(int argc, char** argv) {
     // Define the placement and height of the scan line
     size_t scan_line_top;
     if(argc >= 2) scan_line_top = stoi(argv[1]);
-    else scan_line_top = 1100;
+    else scan_line_top = 1028;
 
     size_t scan_line_height;
     if(argc >= 3) scan_line_height = stoi(argv[2]);
-    else scan_line_height = 1100;
+    else scan_line_height = 5;
 
     // Defines the width of a bucket
     size_t bucket_width;
     if(argc >= 4) bucket_width = stoi(argv[3]);
-    else bucket_width = 1100;
+    else bucket_width = 15;
 
     // Initialize image
     vector<BYTE> image(3 * 2592 * scan_line_height);
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
 
         // Load the image file
         ifstream image_file("pic.bmp", std::ios::binary);
-        
+
 	// Read image header into buffer
         vector<BYTE> header_buffer(54, 0);
         image_file.read((char*)(&header_buffer[0]), 54);
