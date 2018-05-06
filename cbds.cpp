@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <map>
 #include <utility>
-#include <wiringpi.h>
+#include <wiringPi.h>
 #include "utility.h"
 
 using namespace std;
@@ -47,7 +47,8 @@ int main(int argc, char** argv) {
     int dot_pos = -1;
 
     // Initialize gpio
-    pinMod(1, PWM_OUT);
+    wiringPiSetup();
+    pinMode(1, PWM_OUTPUT);
 
     while(true) {
         // Take picture
@@ -194,9 +195,9 @@ int main(int argc, char** argv) {
 
         if(dot_position >= 0) {
             cout << "Dot found at x = " << dot_position << endl;
-            float dist = lookup.dist(dot_position) * 0.254;
+            float dist = lookup.dist(dot_position) * 0.0254;
             cout << "The dot is " << dist << " meters away" << endl;
-            pwmWrite(1, unsigned(760.f * dist.powf(1/3)));
+            pwmWrite(1, unsigned(760.f * powf(dist,0.33333)));
         }
         else {
             cout << "Dot not found" << endl;
