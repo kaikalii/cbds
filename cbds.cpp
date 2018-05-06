@@ -53,10 +53,13 @@ int main(int argc, char** argv) {
     int fd = serialOpen("/dev/ttyAMA0", 9600);
     if(fd < 0) {
         cout << "unable to open serial connection" << endl;
-        return;
+        return 0;
     }
 
     while(true) {
+	while(serialDataAvail(fd) > 0) {
+		cout << serialGetchar(fd) << endl;
+	}
         // Take picture
         system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
 
@@ -207,8 +210,10 @@ int main(int argc, char** argv) {
             cout << "Dot found at x = " << dot_position << endl;
             float dist = lookup.dist(dot_position) * 0.0254;
             cout << "The dot is " << dist << " meters away" << endl;
-
-            pwmWrite(1, unsigned(760.f * powf(dist,0.33333)));
+	    
+	    unsigned pwm_num = 760.f * powf(dist, 0.33333);
+	    cout << "pwm writing " << pwm_num << endl;
+	    pwmWrite(1, pwm_num);
 
             float mm = dist * 1000;
             unsigned char a = int(mm) / 256;
