@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 
     while(true) {
         // Take picture
-        system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
+        // system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
         cout << "took picture" << endl;
 
         // Load the image file
@@ -63,9 +63,11 @@ int main(int argc, char** argv) {
         // Get the image size from the buffer
         size_t width = size_t(header_buffer[19]) * 256 + size_t(header_buffer[18]);
         size_t height = size_t(header_buffer[23]) * 256 + size_t(header_buffer[22]);
+        cout << "(w, h): (" << width ", " << height << ")" << endl;
 
         // Read image into image buffer
         image_file.read((char*)(&image[0]), width * height);
+        cout << "image read into buffer" << endl;
 
         // Run the algorithm
 

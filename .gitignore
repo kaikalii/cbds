@@ -3,3 +3,4 @@
 src/cbds.cpp
 *.o
 *.exe
+*.bmp
