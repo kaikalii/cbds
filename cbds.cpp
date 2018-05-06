@@ -92,6 +92,10 @@ int main(int argc, char** argv) {
             if(buckets.find(main_key) == buckets.end()) buckets.insert(pair<unsigned, Bucket>(main_key, Bucket()));
             buckets[main_key].insert(main_key, i, simplifyColor(avg_pixels[i]));
         }
+        // for(int i = 0; i < width/bucket_width; i++) {
+        //     cout << buckets[i].simple_color;
+        // }
+        // cout << endl;
         // for(auto &ap: avg_pixels) {
         //     if(isWhite(ap)) cout << "X";
         //     else if(isRed(ap)) cout << "o";
@@ -116,7 +120,7 @@ int main(int argc, char** argv) {
 
             // For each pair of keys to merge, merge the corresponding buckets
             for(auto &pair: keys_to_merge) {
-                if(buckets.find(pair.first) != buckets.find(pair.second)) {
+                if(buckets.find(pair.first) != buckets.end() && buckets.find(pair.second) != buckets.end()) {
                     Bucket a = buckets[pair.first];
                     Bucket b = buckets[pair.second];
                     buckets.erase(pair.first);
@@ -152,7 +156,7 @@ int main(int argc, char** argv) {
         }
 
         // Find the dot
-        unsigned dot_position = -1;
+        int dot_position = -1;
 
         int i = 0;
         for(auto &fcp: final_color_positions) {
