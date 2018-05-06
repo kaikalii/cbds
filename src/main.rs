@@ -34,7 +34,7 @@ fn main() {
         );
     }
     lookup.fill();
-    println!("{:?}", lookup);
+    // println!("{:?}", lookup);
 
     let args: Vec<String> = env::args().collect();
 

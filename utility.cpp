@@ -69,13 +69,14 @@ float LookupTable::addExact(size_t i, float dist) {
 }
 float LookupTable::getExact(size_t i) {
     if(v[i].type == EXACT) return v[i].exact;
-    cout << "Called exact() with non-exact index" << endl;
+    cout << "Called exact() with non-exact index: " << i << endl;
 }
 void LookupTable::fill() {
     for(int i = 0; i < v.size(); i++) {
         if(v[i].type == EXACT) {
             for(int j = i + 1; j < v.size(); j++) {
-                if(v[j].type == BLANK) {
+                if(v[j].type == EXACT) break;
+                else if(v[j].type == BLANK) {
                     v[j] = Lookup(i, -1);
                 }
             }
@@ -83,13 +84,14 @@ void LookupTable::fill() {
     }
     for(int i = v.size() - 1; i >= 1; i--) {
         if(v[i].type == EXACT) {
-            for(int j = i - i; j >= 0; j--) {
+            for(int j = i - 1; j >= 0; j--) {
                 switch(v[j].type) {
-                    case EXACT: break;
+                    case EXACT: goto tag;
                     case MID: v[j].mid[1] = i; break;
                     case BLANK: v[i] = Lookup(-1, i); break;
                 }
             }
+            tag:;
         }
     }
 }
