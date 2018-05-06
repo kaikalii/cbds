@@ -20,6 +20,7 @@ vector<unsigned int> bmp_pixel(vector<unsigned char>& image, size_t width, size_
     result[0] = image[3 * (j * width + i) + 2];
     result[1] = image[3 * (j * width + i) + 1];
     result[2] = image[3 * (j * width + i) + 0];
+    return result;
 }
 
 bool adjacentBucket(int a, int b) {

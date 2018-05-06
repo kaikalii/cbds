@@ -49,25 +49,21 @@ int main(int argc, char** argv) {
 
     while(true) {
         // Take picture
-        // system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
-        cout << "took picture" << endl;
+        system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
 
         // Load the image file
         ifstream image_file("pic.bmp", std::ios::binary);
-        cout << "opended image file" << endl;
-
-        // Read image header into buffer
+        
+	// Read image header into buffer
         vector<BYTE> header_buffer(54, 0);
         image_file.read((char*)(&header_buffer[0]), 54);
 
         // Get the image size from the buffer
         size_t width = size_t(header_buffer[19]) * 256 + size_t(header_buffer[18]);
         size_t height = size_t(header_buffer[23]) * 256 + size_t(header_buffer[22]);
-        cout << "(w, h): (" << width ", " << height << ")" << endl;
 
         // Read image into image buffer
         image_file.read((char*)(&image[0]), width * height);
-        cout << "image read into buffer" << endl;
 
         // Run the algorithm
 
