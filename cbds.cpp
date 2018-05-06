@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
 
         cout << endl;
         for(auto &fcp: final_color_positions_map) {
-            cout << fcp.second << "at" << fcp.first << endl;
+            cout << fcp.second << " at " << fcp.first << endl;
         }
         cout << endl;
 
@@ -175,7 +175,7 @@ int main(int argc, char** argv) {
         }
 
         if(dot_position >= 0) {
-            cout << "Dot found at x = " << dot_position;
+            cout << "Dot found at x = " << dot_position << endl;
             unsigned final_pos = lookup.dist(dot_position);
             cout << "The dot is " << final_pos << "inches away" << endl;
         }
