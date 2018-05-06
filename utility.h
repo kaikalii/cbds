@@ -2,8 +2,8 @@
 #include <set>
 #include <unordered_map>
 
-bool isWhite(const unsigned int color[3]);
-bool isRed(const unsigned int color[3]);
+bool isWhite(const std::vector<unsigned int>& color);
+bool isRed(const std::vector<unsigned int>& color);
 
 bool adjacentBucket(int a, int b);
 
@@ -18,6 +18,7 @@ public:
     std::set<unsigned int> points;
     simple_color_t simple_color;
 
+    Bucket();
     unsigned int mainKey();
     void insert(unsigned int key, unsigned int point, simple_color_t sc);
     void merge(const Bucket& other);

@@ -2,7 +2,7 @@
 
 extern crate serde;
 extern crate serde_yaml;
-extern crate wiringpi;
+// extern crate wiringpi;
 
 mod utility;
 
@@ -16,17 +16,27 @@ use utility::*;
 
 fn main() {
     // Load lookup data
-    let file = File::open("calibrations.yaml").expect("no calibrations file");
-    let lookup_data: Vec<(usize, f32)> =
-        serde_yaml::from_reader(file).expect("unable to deserialize calibrations");
+    let mut file = File::open("calibrations.txt").expect("no calibrations file");
+    let mut cal_str = String::new();
+    file.read_to_string(&mut cal_str)
+        .expect("Unable to read calbrations to string");
     // Creat lookup table
     let mut lookup = LookupTable::new(2592);
-    // Insert lookup values and fill
-    for x in lookup_data {
-        lookup.add_exact(x.0, x.1);
-    }
+    let mut words = cal_str.split_whitespace();
 
+    // Insert lookup values and fill
+    while let Some(pos_str) = words.next() {
+        lookup.add_exact(
+            pos_str.parse().expect("unable to parse pos_str"),
+            words
+                .next()
+                .expect("odd number of words")
+                .parse()
+                .expect("unable to parse dist_str"),
+        );
+    }
     lookup.fill();
+    println!("{:?}", lookup);
 
     let args: Vec<String> = env::args().collect();
 
@@ -56,8 +66,8 @@ fn main() {
     let mut dot_position: Option<u32>;
 
     // Initialize gpio
-    let pi = wiringpi::setup();
-    let pin = pi.pwm_pin();
+    // let pi = wiringpi::setup();
+    // let pin = pi.pwm_pin();
 
     loop {
         // Take picture
@@ -65,6 +75,7 @@ fn main() {
             .args(&["-o", "pic.bmp", "--nopreview", "-t", "10", "-e", "bmp"])
             .output()
             .expect("Unable to exectue take picture command.");
+        println!("took picture");
 
         // Load the image file
         let mut image_file = File::open("pic.bmp").expect("Unable to openimage file.");
@@ -91,6 +102,7 @@ fn main() {
         image_file
             .read_exact(&mut scan_line_image)
             .expect("Unable to read image scan line.");
+        println!("read image into buffer");
 
         // Run the algorithm
 
@@ -216,11 +228,11 @@ fn main() {
                 println!("Dot found at x = {}", pos);
                 let final_pos = lookup.dist(pos as usize);
                 println!("The dot is {} inches away", final_pos);
-                pin.write((final_pos.powf(0.33333) * 149.12) as u16);
+                // pin.write((final_pos.powf(0.33333) * 149.12) as u16);
             }
             None => {
                 println!("Dot not found!");
-                pin.write(0);
+                // pin.write(0);
             }
         }
     }

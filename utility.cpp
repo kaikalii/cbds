@@ -33,7 +33,7 @@ simple_color_t simplifyColor(const std::vector<unsigned int>& color) {
     return other;
 }
 
-
+Bucket::Bucket() :simple_color(other) {}
 unsigned int Bucket::mainKey() {
     return *keys.begin();
 }
@@ -101,6 +101,9 @@ float LookupTable::dist(size_t i) {
             size_t& b = v[i].mid[1];
             if(a < 0 || b < 0) return -1;
             return (float(i - a) * getExact(b) + float(b - i) * getExact(a)) / (b - a);
+        }
+        case BLANK: {
+            cout << "error, blank lookup" << endl;
         }
     }
 }

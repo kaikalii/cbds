@@ -173,7 +173,7 @@ impl LookupTable {
         }
         for i in (1..size).rev() {
             if let Exact(_) = self.v[i] {
-                for j in (0..(i - 1)).rev() {
+                for j in (0..(i)).rev() {
                     match self.v[j].clone() {
                         Exact(_) => break,
                         Mid(..) => {

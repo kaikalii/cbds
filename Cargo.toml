@@ -6,4 +6,4 @@ authors = ["Kai Schmidt <kaikaliischmidt@gmail.com>"]
 [dependencies]
 serde = "*"
 serde_yaml = "*"
-wiringpi = "*"
+# wiringpi = "*"

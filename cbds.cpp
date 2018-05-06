@@ -49,12 +49,12 @@ int main(int argc, char** argv) {
 
     while(true) {
         // Take picture
-        system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
+        // system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
 
         // Load the image file
         ifstream image_file("pic.bmp", std::ios::binary);
 
-	// Read image header into buffer
+    	// Read image header into buffer
         vector<BYTE> header_buffer(54, 0);
         image_file.read((char*)(&header_buffer[0]), 54);
 
@@ -63,13 +63,18 @@ int main(int argc, char** argv) {
         size_t height = size_t(header_buffer[23]) * 256 + size_t(header_buffer[22]);
 
         // Read image into image buffer
+        image_file.seekg(54 + (height - scan_line_top - scan_line_height) * width * 3);
         image_file.read((char*)(&image[0]), width * height);
 
         // Run the algorithm
 
         // Intialize buckets and avg_pixels
         unordered_map<unsigned, Bucket> buckets;
-        vector<vector<unsigned>> avg_pixels(width, vector<unsigned>(3, 0));
+        vector<vector<unsigned>> avg_pixels;
+        for(int i = 0; i < width; i++) {
+            vector<unsigned> new_pixel(3, 0);
+            avg_pixels.push_back(new_pixel);
+        }
 
         // Get average pixels and add them to buckets
         for(int i = 0; i < width; i++) {
@@ -82,10 +87,17 @@ int main(int argc, char** argv) {
             avg_pixels[i][0] /= scan_line_height;
             avg_pixels[i][1] /= scan_line_height;
             avg_pixels[i][2] /= scan_line_height;
-            unsigned bucket = i / bucket_width;
-            if(buckets.find(bucket) == buckets.end()) buckets[bucket] = Bucket();
-            buckets[bucket].insert(bucket, i, simplifyColor(avg_pixels[i]));
+            // cout << avg_pixels[i][0] << ", " << avg_pixels[i][1] << ", " << avg_pixels[i][2] << endl;
+            unsigned main_key = i / bucket_width;
+            if(buckets.find(main_key) == buckets.end()) buckets.insert(pair<unsigned, Bucket>(main_key, Bucket()));
+            buckets[main_key].insert(main_key, i, simplifyColor(avg_pixels[i]));
         }
+        for(auto &ap: avg_pixels) {
+            if(isWhite(ap)) cout << "X";
+            else if(isRed(ap)) cout << "o";
+            else cout << ".";
+        }
+        cout << endl;
 
         // Amolgomate buckets
         bool done = false;
@@ -133,56 +145,57 @@ int main(int argc, char** argv) {
             cout << fcp.second << " at " << fcp.first << endl;
         }
         cout << endl;
-
-        vector<pair<unsigned, simple_color_t>> final_color_positions;
-        for(auto &fcp: final_color_positions_map) {
-            final_color_positions.push_back(fcp);
-        }
-
-        // Find the dot
-        unsigned dot_position = -1;
-
-        int i = 0;
-        for(auto &fcp: final_color_positions) {
-            if(fcp.second == white
-                && (
-                    (i == 0
-                        || final_color_positions[i - 1].second == red)
-                    || (i == final_color_positions.size() - 1
-                        || final_color_positions[i + 1].second == red)
-                )
-            ) {
-                dot_position = fcp.first;
-                break;
-            }
-            i++;
-        }
-
-        // if the dot was not found looking for red white red, look for just red
-        for(auto &fcp: final_color_positions) {
-            if(fcp.second == white) {
-                dot_position = fcp.first;
-                break;
-            }
-        }
-
-        // if the dot was still not found looking for red, look for white
-        for(auto &fcp: final_color_positions) {
-            if(fcp.second == red) {
-                dot_position = fcp.first;
-                break;
-            }
-        }
-
-        if(dot_position >= 0) {
-            cout << "Dot found at x = " << dot_position << endl;
-            unsigned final_pos = lookup.dist(dot_position);
-            cout << "The dot is " << final_pos << "inches away" << endl;
-        }
-        else {
-            cout << "Dot not found" << endl;
-        }
     }
+
+    //     vector<pair<unsigned, simple_color_t>> final_color_positions;
+    //     for(auto &fcp: final_color_positions_map) {
+    //         final_color_positions.push_back(fcp);
+    //     }
+    //
+    //     // Find the dot
+    //     unsigned dot_position = -1;
+    //
+    //     int i = 0;
+    //     for(auto &fcp: final_color_positions) {
+    //         if(fcp.second == white
+    //             && (
+    //                 (i == 0
+    //                     || final_color_positions[i - 1].second == red)
+    //                 || (i == final_color_positions.size() - 1
+    //                     || final_color_positions[i + 1].second == red)
+    //             )
+    //         ) {
+    //             dot_position = fcp.first;
+    //             break;
+    //         }
+    //         i++;
+    //     }
+    //
+    //     // if the dot was not found looking for red white red, look for just red
+    //     for(auto &fcp: final_color_positions) {
+    //         if(fcp.second == white) {
+    //             dot_position = fcp.first;
+    //             break;
+    //         }
+    //     }
+    //
+    //     // if the dot was still not found looking for red, look for white
+    //     for(auto &fcp: final_color_positions) {
+    //         if(fcp.second == red) {
+    //             dot_position = fcp.first;
+    //             break;
+    //         }
+    //     }
+    //
+    //     if(dot_position >= 0) {
+    //         cout << "Dot found at x = " << dot_position << endl;
+    //         unsigned final_pos = lookup.dist(dot_position);
+    //         cout << "The dot is " << final_pos << "inches away" << endl;
+    //     }
+    //     else {
+    //         cout << "Dot not found" << endl;
+    //     }
+    // }
 
     return 0;
 }
