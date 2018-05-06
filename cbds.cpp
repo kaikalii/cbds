@@ -9,6 +9,7 @@
 #include <map>
 #include <utility>
 #include <wiringPi.h>
+#include <wiringSerial.h>
 #include "utility.h"
 
 using namespace std;
@@ -49,6 +50,7 @@ int main(int argc, char** argv) {
     // Initialize gpio
     wiringPiSetup();
     pinMode(1, PWM_OUTPUT);
+    int fd = serialOpen("/dev/ttyAMA0", 9600);
 
     while(true) {
         // Take picture
@@ -197,7 +199,16 @@ int main(int argc, char** argv) {
             cout << "Dot found at x = " << dot_position << endl;
             float dist = lookup.dist(dot_position) * 0.0254;
             cout << "The dot is " << dist << " meters away" << endl;
+
             pwmWrite(1, unsigned(760.f * powf(dist,0.33333)));
+
+            float mm = dist * 1000;
+            unsigned char a = int(mm) / 256;
+            unsigned char b = int(mm) % 256;
+            serialPutchar(fd, 0);
+            serialPutchar(fd, 100);
+            serialPutchar(fd, a);
+            serialPutchar(fd, b);
         }
         else {
             cout << "Dot not found" << endl;
