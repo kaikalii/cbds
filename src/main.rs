@@ -1,7 +1,5 @@
 #![allow(dead_code)]
 
-extern crate serde;
-extern crate serde_yaml;
 // extern crate wiringpi;
 
 mod utility;

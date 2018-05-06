@@ -1,48 +1,4 @@
 [[package]]
 name = "cbds"
 version = "0.1.0"
-dependencies = [
- "serde 1.0.45 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_yaml 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
-[[package]]
-name = "dtoa"
-version = "0.4.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "linked-hash-map"
-version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "serde"
-version = "1.0.45"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "serde_yaml"
-version = "0.7.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "dtoa 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "linked-hash-map 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 1.0.45 (registry+https://github.com/rust-lang/crates.io-index)",
- "yaml-rust 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "yaml-rust"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "linked-hash-map 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[metadata]
-"checksum dtoa 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)" = "09c3753c3db574d215cba4ea76018483895d7bff25a31b49ba45db21c48e50ab"
-"checksum linked-hash-map 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "70fb39025bc7cdd76305867c4eccf2f2dcf6e9a57f5b21a93e1c2d86cd03ec9e"
-"checksum serde 1.0.45 (registry+https://github.com/rust-lang/crates.io-index)" = "6a49d806123bcdaacdefe7aab3721c64ec11d05921bf64d888a857d3a92024a0"
-"checksum serde_yaml 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)" = "107bb818146aaf922e7bbcf6a940f1db2f0dcf381779b451e400331b2c6f86db"
-"checksum yaml-rust 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "57ab38ee1a4a266ed033496cf9af1828d8d6e6c1cfa5f643a2809effcae4d628"
