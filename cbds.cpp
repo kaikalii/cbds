@@ -50,7 +50,11 @@ int main(int argc, char** argv) {
     // Initialize gpio
     wiringPiSetup();
     pinMode(1, PWM_OUTPUT);
-    int fd = serialOpen("/dev/ttyS0", 9600);
+    int fd = serialOpen("/dev/ttyAMA0", 9600);
+    if(fd < 0) {
+        cout << "unable to open serial connection" << endl;
+        return;
+    }
 
     while(true) {
         // Take picture
