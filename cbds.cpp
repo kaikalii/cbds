@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     // Define the placement and height of the scan line
     size_t scan_line_top;
     if(argc >= 2) scan_line_top = stoi(argv[1]);
-    else scan_line_top = 1028;
+    else scan_line_top = 116;
 
     size_t scan_line_height;
     if(argc >= 3) scan_line_height = stoi(argv[2]);
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
 		cout << serialGetchar(fd) << endl;
 	}
         // Take picture
-        system("raspistill -o pic.bmp --nopreview -t 10 -e bmp");
+        system("raspistill -o pic.bmp --nopreview -t 10 -e bmp -roi 0.0,0.5,1.0,1.0 -h 150");
 
         // Load the image file
         ifstream image_file("pic.bmp", std::ios::binary);
@@ -210,7 +210,7 @@ int main(int argc, char** argv) {
             cout << "Dot found at x = " << dot_position << endl;
             float dist = lookup.dist(dot_position) * 0.0254;
             cout << "The dot is " << dist << " meters away" << endl;
-	    
+
 	    unsigned pwm_num = 760.f * powf(dist, 0.33333);
 	    cout << "pwm writing " << pwm_num << endl;
 	    pwmWrite(1, pwm_num);
