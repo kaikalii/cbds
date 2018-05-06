@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
     // Initialize gpio
     wiringPiSetup();
     pinMode(1, PWM_OUTPUT);
-    int fd = serialOpen("/dev/ttyAMA0", 9600);
+    int fd = serialOpen("/dev/ttyS0", 9600);
 
     while(true) {
         // Take picture
@@ -180,18 +180,22 @@ int main(int argc, char** argv) {
         }
 
         // if the dot was not found looking for red white red, look for just red
-        for(auto &fcp: final_color_positions) {
-            if(fcp.second == white) {
-                dot_position = fcp.first;
-                break;
+        if(dot_position == -1) {
+            for(auto &fcp: final_color_positions) {
+                if(fcp.second == white) {
+                    dot_position = fcp.first;
+                    break;
+                }
             }
         }
 
         // if the dot was still not found looking for red, look for white
-        for(auto &fcp: final_color_positions) {
-            if(fcp.second == red) {
-                dot_position = fcp.first;
-                break;
+        if(dot_position == -1) {
+            for(auto &fcp: final_color_positions) {
+                if(fcp.second == red) {
+                    dot_position = fcp.first;
+                    break;
+                }
             }
         }
 
