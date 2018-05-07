@@ -16,7 +16,7 @@ bool isRed(const std::vector<unsigned int>& color) {
 }
 
 bool isGreen(const std::vector<unsigned int>& color) {
-    return powf(float(color[1]), 2.0) / float(color[0] + color[2]) >= 1500.f;
+    return powf(float(color[1]), 2.0) / float(color[0] + color[2]) >= 1500.f && color[1] > 160;
 }
 
 vector<unsigned int> bmp_pixel(vector<unsigned char>& image, size_t width, size_t i, size_t j) {
