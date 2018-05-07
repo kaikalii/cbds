@@ -8,15 +8,15 @@
 using namespace std;
 
 bool isWhite(const std::vector<unsigned int>& color) {
-    return (color[0] + color[1] + color[2]) / 3 > 240;
+    return (color[0] + color[1] + color[2]) / 3 > 238;
 }
 
 bool isRed(const std::vector<unsigned int>& color) {
-    return powf(float(color[0]), 2.0) / float(color[1] + color[2]) >= 310.f;
+    return powf(float(color[0]), 2.0) / float(color[1] + color[2]) >= 305.f;
 }
 
 bool isGreen(const std::vector<unsigned int>& color) {
-    return powf(float(color[1]), 2.0) / float(color[0] + color[2]) >= 1500.f && color[1] > 160;
+    return powf(float(color[1]), 2.0) / float(color[0] + color[2]) >= 1300.f && color[1] > 160;
 }
 
 vector<unsigned int> bmp_pixel(vector<unsigned char>& image, size_t width, size_t i, size_t j) {
