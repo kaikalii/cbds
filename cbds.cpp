@@ -162,7 +162,7 @@ int main(int argc, char** argv) {
             if(fcp.second == white) color_string = "\033[1mWHITE\033[0m";
             else if(fcp.second == red) color_string = "\033[1;31mRED  \033[0m";
             else if(fcp.second == green) color_string = "\033[1;32mGREEN\033[0m";
-            else color_string = "\033[1;30;44mOTHER\033[0m";
+            else color_string = "\033[1;30mOTHER\033[0m";
             cout << color_string << " at " << fcp.first << endl;
         }
         cout << endl;
