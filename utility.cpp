@@ -93,7 +93,7 @@ void LookupTable::fill() {
                 switch(v[j].type) {
                     case EXACT: goto tag;
                     case MID: v[j].mid[1] = i; break;
-                    case BLANK: v[i] = Lookup(-1, i); break;
+                    case BLANK: v[j] = Lookup(-1, i); break;
                 }
             }
             tag:;
@@ -111,6 +111,7 @@ float LookupTable::dist(size_t i) {
         }
         case BLANK: {
             cout << "error, blank lookup" << endl;
+			return -1;
         }
     }
 }
