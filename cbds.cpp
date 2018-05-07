@@ -159,9 +159,9 @@ int main(int argc, char** argv) {
         cout << endl;
         for(auto &fcp: final_color_positions_map) {
             string color_string;
-            if(fcp.second == white) color_string = "\033[1mWHITE\033[0m"
-            else if(fcp.second == red) color_string = "\033[1;31mRED  \033[0m"
-            else color_string = "\033[1;34mOTHER\033[0m"
+            if(fcp.second == white) color_string = "\033[1mWHITE\033[0m";
+            else if(fcp.second == red) color_string = "\033[1;31mRED  \033[0m";
+            else color_string = "\033[1;34mOTHER\033[0m";
             cout << color_string << " at " << fcp.first << endl;
         }
         cout << endl;
