@@ -209,7 +209,7 @@ int main(int argc, char** argv) {
         if(dot_position >= 0) {
             cout << "Dot found at x = " << dot_position << endl << endl;
             float dist = lookup.dist(dot_position) * 0.0254;
-            cout << "The dot is \033[1;36m" << dist << "\033[0m\n meters away" << endl;
+            cout << "The dot is \033[1;36m" << dist << "\033[0m meters away" << endl;
 
     	    unsigned pwm_num = 760.f * powf(dist, 0.33333);
     	    pwmWrite(1, pwm_num);
