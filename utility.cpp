@@ -15,6 +15,10 @@ bool isRed(const std::vector<unsigned int>& color) {
     return powf(float(color[0]), 2.0) / float(color[1] + color[2]) >= 310.f;
 }
 
+bool isGreen(const std::vector<unsigned int>& color) {
+    return powf(float(color[1]), 2.0) / float(color[0] + color[2]) >= 310.f;
+}
+
 vector<unsigned int> bmp_pixel(vector<unsigned char>& image, size_t width, size_t i, size_t j) {
     vector<unsigned int> result(3);
     result[0] = image[3 * (j * width + i) + 2];
@@ -30,6 +34,7 @@ bool adjacentBucket(int a, int b) {
 simple_color_t simplifyColor(const std::vector<unsigned int>& color) {
     if(isWhite(color)) return white;
     if(isRed(color)) return red;
+    if(isGreen(color)) return green;
     return other;
 }
 

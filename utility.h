@@ -4,11 +4,12 @@
 
 bool isWhite(const std::vector<unsigned int>& color);
 bool isRed(const std::vector<unsigned int>& color);
+bool isGreen(const std::vector<unsigned int>& color);
 
 bool adjacentBucket(int a, int b);
 
 std::vector<unsigned int> bmp_pixel(std::vector<unsigned char>& image, size_t width, size_t i, size_t j);
-enum simple_color_t {other, red, white};
+enum simple_color_t {other, green, red, white};
 
 simple_color_t simplifyColor(const std::vector<unsigned int>& color);
 
