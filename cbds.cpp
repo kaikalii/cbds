@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     // Define the placement and height of the scan line
     size_t scan_line_top;
     if(argc >= 2) scan_line_top = stoi(argv[1]);
-    else scan_line_top = 116;
+    else scan_line_top = 114;
 
     size_t scan_line_height;
     if(argc >= 3) scan_line_height = stoi(argv[2]);
