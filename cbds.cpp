@@ -80,40 +80,25 @@ int main(int argc, char** argv) {
 
         // Run the algorithm
 
-        // Intialize buckets and avg_pixels
+        // Intialize buckets
         unordered_map<unsigned, Bucket> buckets;
-        vector<vector<unsigned>> avg_pixels;
-        for(int i = 0; i < width; i++) {
-            vector<unsigned> new_pixel(3, 0);
-            avg_pixels.push_back(new_pixel);
-        }
 
         // Get average pixels and add them to buckets
         for(int i = 0; i < width; i++) {
+            vector<unsigned> avg_pixel(3, 0);
             for(int j = 0; j < scan_line_height; j++) {
                 auto color = bmp_pixel(image, width, i, j);
-                avg_pixels[i][0] += color[0];
-                avg_pixels[i][1] += color[1];
-                avg_pixels[i][2] += color[2];
+                avg_pixel[0] += color[0];
+                avg_pixel[1] += color[1];
+                avg_pixel[2] += color[2];
             }
-            avg_pixels[i][0] /= scan_line_height;
-            avg_pixels[i][1] /= scan_line_height;
-            avg_pixels[i][2] /= scan_line_height;
-            // cout << avg_pixels[i][0] << ", " << avg_pixels[i][1] << ", " << avg_pixels[i][2] << endl;
+            avg_pixel[0] /= scan_line_height;
+            avg_pixel[1] /= scan_line_height;
+            avg_pixel[2] /= scan_line_height;
             unsigned main_key = i / bucket_width;
             if(buckets.find(main_key) == buckets.end()) buckets.insert(pair<unsigned, Bucket>(main_key, Bucket()));
-            buckets[main_key].insert(main_key, i, simplifyColor(avg_pixels[i]));
+            buckets[main_key].insert(main_key, i, simplifyColor(avg_pixel));
         }
-        // for(int i = 0; i < width/bucket_width; i++) {
-        //     cout << buckets[i].simple_color;
-        // }
-        // cout << endl;
-        // for(auto &ap: avg_pixels) {
-        //     if(isWhite(ap)) cout << "X";
-        //     else if(isRed(ap)) cout << "o";
-        //     else cout << ".";
-        // }
-        // cout << endl;
 
         // Amolgomate buckets
         bool done = false;
